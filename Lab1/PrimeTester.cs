@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Timers;
 
 namespace Lab1
@@ -12,7 +14,7 @@ namespace Lab1
         }
         
 
-        public static bool IsPrime(uint n, PrimeTestType testType)
+        public static bool IsPrime(int n, PrimeTestType testType)
         {
             switch (testType)
             {
@@ -27,14 +29,14 @@ namespace Lab1
             }
         }
 
-        private static bool IsTrialPrime(uint n)
+        private static bool IsTrialPrime(int n)
         {
             if (2 > n)
                 return false;
 
-            var sqrt = (uint)Math.Sqrt(n) + 1;
+            var sqrt = (int)Math.Sqrt(n) + 1;
 
-            for (var i = 2; i < sqrt; ++i)
+            for (var i = 2; i < sqrt; i += 2)
             {
                 if ((n / i) * i == n)
                     return false;
@@ -42,17 +44,31 @@ namespace Lab1
 
             return true;
         }
-        private static bool IsEratosthenesPrime(uint n)
+        private static bool IsEratosthenesPrime(int n)
         {
-            return false;
+            if (2 > n)
+                return false;
+
+            var isPrime = new BitArray(n + 1, true);
+
+            for (var i = 2; i < (int)Math.Sqrt(n) + 1; ++i)
+            {
+                if (!isPrime[i])
+                    continue;
+
+                for (var j = i*2; j <= n; j+=i)
+                    isPrime[j] = false;
+            }
+
+            return isPrime[n]; 
         }
 
 
         private static readonly string[] MenuVariants =
         {
             "Exit",
-            "Trial division",
-            "Eratosthenes sieve"
+            PrimeTestType.TrialDivision.ToString(),
+            PrimeTestType.EratosthenesSieve.ToString()
         };
 
         static void Main(string[] args)
@@ -71,10 +87,21 @@ namespace Lab1
                 {
                     Console.Write("N = ");
 
-                } while (!uint.TryParse(Console.ReadLine(), out n));
+                    var isValid = uint.TryParse(Console.ReadLine(), out n);
+
+                    if (isValid && n < 1000000)
+                        break;
+
+                    if (!isValid)
+                        Console.WriteLine("Invalid number");
+
+                    if (n >= 1000000)
+                        Console.WriteLine("Number is too big");
+
+                } while (true);
 
 
-                var isNPrime = IsPrime(n, testType);
+                var isNPrime = IsPrime((int)n, testType);
 
 
                 Console.WriteLine("{0} is {1}prime", n, isNPrime ? "" : "not ");
