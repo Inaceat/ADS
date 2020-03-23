@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Lab3
 {
@@ -6,6 +7,24 @@ namespace Lab3
     {
         private static void DoStockExchangeCheating()
         {
+            Console.WriteLine("Prices:");
+
+            var input = Console.ReadLine();
+
+            var data = input.Split(' ').Select(uint.Parse).ToArray();
+
+
+            var cheater = new StockExchangeCheater(data);
+
+            var (buyDayIndex, sellDayIndex, profit) = cheater.DoTimeWarpCheating();
+
+
+            if (profit > 0)
+                Console.WriteLine(
+                    "Buy on day {0}, at a price of {1}, sell on day {2}, at a price of {3}, and get PROFIT of {4}!!!",
+                    buyDayIndex + 1, data[buyDayIndex], sellDayIndex + 1, data[sellDayIndex], profit);
+            else
+                Console.WriteLine("No profit here, dude...");
 
         }
 

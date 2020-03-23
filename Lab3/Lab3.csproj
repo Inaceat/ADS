@@ -46,6 +46,7 @@
     <Compile Include="ExpressionMaxFinder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockExchangeCheater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
