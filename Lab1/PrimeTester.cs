@@ -7,6 +7,8 @@ namespace Lab1
 {
     public class PrimeTester
     {
+        public static int MaxNumber = 1000000000;
+
         public enum PrimeTestType
         {
             TrialDivision,
@@ -56,7 +58,7 @@ namespace Lab1
                 if (!isPrime[i])
                     continue;
 
-                for (var j = i*2; j <= n; j+=i)
+                for (var j = i*i; j <= n; j+=i)
                     isPrime[j] = false;
             }
 
@@ -89,13 +91,13 @@ namespace Lab1
 
                     var isValid = uint.TryParse(Console.ReadLine(), out n);
 
-                    if (isValid && n < 1000000)
+                    if (isValid && n < MaxNumber)
                         break;
 
                     if (!isValid)
                         Console.WriteLine("Invalid number");
 
-                    if (n >= 1000000)
+                    if (n >= MaxNumber)
                         Console.WriteLine("Number is too big");
 
                 } while (true);
