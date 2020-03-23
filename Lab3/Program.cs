@@ -11,10 +11,31 @@ namespace Lab3
 
         private static void DoMaxFind()
         {
+            Console.WriteLine("Size:");
+            int size = int.Parse(Console.ReadLine());
+
+            var nums = new int[size];
+            var ops = new char[size - 1];
+
+
+            Console.WriteLine("Numbs:");
+            for (var i = 0; i < size; ++i)
+            {
+                nums[i] = int.Parse(Console.ReadLine());
+            }
+
+            Console.WriteLine("Ops:");
+            for (var i = 0; i < size - 1; ++i)
+            {
+                ops[i] = char.Parse(Console.ReadLine());
+            }
+
+
+
             var finder = new ExpressionMaxFinder
             (
-                new[] {1, 2, -4, 5}, 
-                new[] {'+', '*', '+'}
+                nums,
+                ops
             );
 
             finder.Find();
@@ -27,12 +48,12 @@ namespace Lab3
         {
             while (true)
             {
-                var choice = 2;/*ReadVariantFromConsole(new[]
+                var choice = ReadVariantFromConsole(new[]
                 {
                     "Exit",
                     "Stock exchange cheat",
                     "Expression max"
-                });*/
+                });
 
                 switch (choice)
                 {
@@ -45,7 +66,7 @@ namespace Lab3
 
                 case 2:
                     DoMaxFind();
-                    return;//break;
+                    break;
                 }
             }
         }
