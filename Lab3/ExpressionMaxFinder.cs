@@ -151,7 +151,7 @@ namespace Lab3
 
                                 minOperationIndex = k;
                                 minLeftOperandIndex = (k, row);
-                                minRightOperandIndex = (column, k - 1);
+                                minRightOperandIndex = (column, k + 1);
                             }
                         }
                     }
