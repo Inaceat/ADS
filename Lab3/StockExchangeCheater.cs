@@ -48,7 +48,7 @@ namespace Lab3
 
             //Now array has at least 2 elements
             //So, divide it
-            int afterMidIndex = (afterLastIndex - firstIndex) / 2;
+            int afterMidIndex = (afterLastIndex + firstIndex) / 2;
 
             //Some recursive calls
             var left = GetMaxSumSubarray(firstIndex, afterMidIndex);
@@ -82,20 +82,23 @@ namespace Lab3
             {
                 currentSum += _differences[i];
 
-                if (currentSum > rightPartMaxSum)
+                if (currentSum >= rightPartMaxSum)
                 {
                     rightPartMaxSum = currentSum;
                     rightPartMaxSumAfterEndIndex = i + 1;
                 }
             }
 
-            //Now get parts together
-            var mid = (leftPartMaxSumBeginIndex, rightPartMaxSumAfterEndIndex, leftPartMaxSum + rightPartMaxSum);
+            //Now put parts together
+            (int subBeginIndex, int subAfterEndIndex, int maxSum) mid = 
+                (leftPartMaxSumBeginIndex, rightPartMaxSumAfterEndIndex, leftPartMaxSum + rightPartMaxSum);
 
-            //Compare left, right and mid
-            if (left.maxSum < mid.Item3)
+
+            //Compare left, right and mid by sum
+            //And return maximum
+            if (left.maxSum < mid.maxSum)
             {
-                if (mid.Item3 < right.maxSum)
+                if (mid.maxSum < right.maxSum)
                     return right;
                 else
                     return mid;
