@@ -11,8 +11,17 @@ namespace Lab3
 
             var input = Console.ReadLine();
 
-            var data = input.Split(' ').Select(uint.Parse).ToArray();
-
+            uint[] data;
+            try
+            {
+                data = input.Split(' ').Select(uint.Parse).ToArray();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Wrong input");
+                return;
+            }
+            
 
             var cheater = new StockExchangeCheater(data);
 
