@@ -45,10 +45,11 @@
   <ItemGroup>
     <Compile Include="DumbSorter.cs" />
     <Compile Include="IIntegerArraySorter.cs" />
-    <Compile Include="SimpleSortingBenchmark.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SSBResult.cs" />
-    <Compile Include="SSBResultEntry.cs" />
+    <Compile Include="SimpleSortingBenchmark\SortingTester.cs" />
+    <Compile Include="SimpleSortingBenchmark\TestResult.cs" />
+    <Compile Include="SimpleSortingBenchmark\ResultEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
