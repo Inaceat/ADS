@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
+using Lab4.SimpleSortingBenchmark.DataProviders;
+using Lab4.Sorters;
 
 namespace Lab4.SimpleSortingBenchmark
 {
     internal class SortingTester
     {
-        private int _seed;
-
         private readonly (int dataSize, int seed)[] _testConfigs;
 
         public SortingTester(ushort seed, params int[] dataSizes)
         {
-            _seed = seed;
-
             _testConfigs = new (int size, int seed)[dataSizes.Length];
 
 
@@ -38,58 +35,58 @@ namespace Lab4.SimpleSortingBenchmark
         }
 
 
+
+
         private TestResult TestSorter((int dataSize, int seed) config, IIntegerArraySorter sorter)
         {
-            var result = new TestResult(config.dataSize);
-
             var dataSeedRNG = new Random(config.seed);
+
+            var randomDataSeed = dataSeedRNG.Next();
+            var ascendingDataSeed = dataSeedRNG.Next();
+            var descendingDataSeed = dataSeedRNG.Next();
+            
+
+            var result = new TestResult(config.dataSize);
 
 
             //Test random data
-            var randomDataSeed = dataSeedRNG.Next();
-            var randomDataRNG = new Random(randomDataSeed);
-
-            //Time test
-            var randomData = new int[config.dataSize];
-            var randomDataCopy = new int[config.dataSize];
-            for (var i = 0; i < randomData.Length; ++i)
-            {
-                randomData[i] = randomDataRNG.Next(int.MinValue, int.MaxValue);
-                randomDataCopy[i] = randomData[i];
-            }
-
-
-            var timer = new Stopwatch();
-
-            timer.Start();
-            sorter.Sort(randomData);
-            timer.Stop();
-
-
-            //Swap & compare test
-            var (swaps, compares) = sorter.SortAndCountSwapsAndCompares(randomDataCopy);
-
-
-            var randomResultEntry = new ResultEntry("Random", timer.Elapsed, swaps, compares);
-            result.AddEntry(randomResultEntry);
+            var randomDataProvider = new RandomIntDataGenerator(randomDataSeed);
+            result.AddEntry("Random", DoTest(randomDataProvider, config.dataSize, sorter));
 
 
             //Test ascending data
-
-            var ascendingResultEntry = new ResultEntry("Ascending", TimeSpan.Zero, 0, 0);
-            result.AddEntry(ascendingResultEntry);
+            var ascendingDataProvider = new AscendingIntDataGenerator(ascendingDataSeed);
+            result.AddEntry("Ascending", DoTest(ascendingDataProvider, config.dataSize, sorter));
 
 
             //Test descending data
-
-            var descendingResultEntry = new ResultEntry("Descending", TimeSpan.Zero, 0, 0);
-            result.AddEntry(descendingResultEntry);
+            var descendingDataProvider = new DescendingIntDataGenerator(descendingDataSeed);
+            result.AddEntry("Descending", DoTest(descendingDataProvider, config.dataSize, sorter));
 
 
             return result;
         }
 
 
+        private ResultEntry DoTest(IIntDataGenerator dataGenerator, int dataSize, IIntegerArraySorter sorter)
+        {
+            //Time
+            int[] data = dataGenerator.GetDataArray(dataSize);
 
+            var timer = new Stopwatch();
+
+            timer.Start();
+            sorter.Sort(data);
+            timer.Stop();
+
+
+            //Swaps & compares
+            data = dataGenerator.GetDataArray(dataSize);
+
+            (int swaps, int compares) = sorter.SortAndCountSwapsAndCompares(data);
+
+
+            return new ResultEntry(timer.Elapsed, swaps, compares);
+        }
     }
 }

@@ -8,20 +8,20 @@ namespace Lab4.SimpleSortingBenchmark
     {
         private readonly int _dataSize;
 
-        private readonly List<ResultEntry> _results;
+        private readonly Dictionary<string, ResultEntry> _results;
 
 
         internal TestResult(int dataSize)
         {
             _dataSize = dataSize;
 
-            _results = new List<ResultEntry>();
+            _results = new Dictionary<string, ResultEntry>();
         }
 
 
-        internal void AddEntry(ResultEntry resultEntry)
+        internal void AddEntry(string name, ResultEntry resultEntry)
         {
-            _results.Add(resultEntry);
+            _results.Add(name, resultEntry);
         }
 
 
@@ -31,15 +31,15 @@ namespace Lab4.SimpleSortingBenchmark
 
             foreach (var entry in _results)
             {
-                Console.WriteLine($"    {entry.Name, 10}: {entry.Time.TotalSeconds:F8} s., {entry.SwapCount} swaps, {entry.CompareCount} compares.");
+                Console.WriteLine($"    {entry.Key, 10}: {entry.Value.Time.TotalSeconds:F8} s., {entry.Value.SwapCount} swaps, {entry.Value.CompareCount} compares.");
             }
 
 
 
             Console.WriteLine($"    {"Average:",10}: " +
-                              $"{_results.Average(entry => entry.Time.TotalSeconds):F8} s., " +
-                              $"{_results.Average(entry => entry.SwapCount)} swaps, " +
-                              $"{_results.Average(entry => entry.CompareCount)} compares.");
+                              $"{_results.Average(entry => entry.Value.Time.TotalSeconds):F8} s., " +
+                              $"{_results.Average(entry => entry.Value.SwapCount)} swaps, " +
+                              $"{_results.Average(entry => entry.Value.CompareCount)} compares.");
 
             Console.WriteLine();
         }

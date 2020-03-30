@@ -1,5 +1,6 @@
 ﻿using System;
 using Lab4.SimpleSortingBenchmark;
+using Lab4.Sorters;
 
 namespace Lab4
 {
