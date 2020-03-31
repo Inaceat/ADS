@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,6 +55,7 @@
     <Compile Include="SimpleSortingBenchmark\SortingTester.cs" />
     <Compile Include="SimpleSortingBenchmark\TestResult.cs" />
     <Compile Include="SimpleSortingBenchmark\ResultEntry.cs" />
+    <Compile Include="Sorters\SelectionSorter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
