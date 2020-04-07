@@ -80,13 +80,26 @@ namespace Lab4.SimpleSortingBenchmark
             timer.Stop();
 
 
+            //Find if sorting succeeded
+            bool correctlySorted = true;
+            for (int i = 0; i < data.Length - 1; ++i)
+            {
+                if (data[i] < data[i + 1]) 
+                    continue;
+
+                correctlySorted = false;
+                break;
+            }
+
+
+
             //Swaps & compares
             data = dataGenerator.GetDataArray(dataSize);
 
             (int swaps, int compares) = sorter.SortAndCountSwapsAndCompares(data);
 
 
-            return new ResultEntry(timer.Elapsed, swaps, compares);
+            return new ResultEntry(correctlySorted, timer.Elapsed, swaps, compares);
         }
     }
 }
