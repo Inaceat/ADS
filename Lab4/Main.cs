@@ -12,7 +12,11 @@ namespace Lab4
 
 
             TestNonSort(bench);
+            
             TestSelectionSort(bench);
+            TestInsertionSort(bench);
+            TestBubbleSort(bench);
+            TestQuickSort(bench);
 
         }
 
@@ -36,6 +40,42 @@ namespace Lab4
             var results = bench.Test("SelectionSorter", selectionSorter);
 
             Console.WriteLine("SelectionSorter:");
+            
+            foreach (TestResult result in results)
+                result.PrintToConsole();
+        }
+
+        private static void TestInsertionSort(SortingTester bench)
+        {
+            var insertionSorter = new InsertionSorter();
+            
+            var results = bench.Test("InsertionSorter", insertionSorter);
+            
+            Console.WriteLine("InsertionSorter:");
+            
+            foreach (TestResult result in results)
+                result.PrintToConsole();
+        }
+
+        private static void TestBubbleSort(SortingTester bench)
+        {
+            var bubbleSorter = new BubbleSorter();
+            
+            var results = bench.Test("BubbleSorter", bubbleSorter);
+            
+            Console.WriteLine("BubbleSorter:");
+            
+            foreach (TestResult result in results)
+                result.PrintToConsole();
+        }
+
+        private static void TestQuickSort(SortingTester bench)
+        {
+            var quickSorter = new QuickSorter();
+            
+            var results = bench.Test("QuickSorter", quickSorter);
+            
+            Console.WriteLine("QuickSorter:");
             
             foreach (TestResult result in results)
                 result.PrintToConsole();
