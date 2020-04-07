@@ -22,10 +22,25 @@ namespace Lab4.Sorters
 
             unsafe
             {
-                //C++ style addresses: [begin; end) arrays
-                fixed (int* begin = &data[0])
+                //[first; last], INCLUSIVE arrays
+                fixed (int* first = &data[0])
                 {
-                    
+                    int* last = first + size - 1;
+
+                    //"wannabeCorrect" is place to have correct element after iteration
+                    //last element is correct if all others are correct, so "wannabeCorrect" is from [first, last)
+                    for (int* wannabeCorrect = first; wannabeCorrect < last; ++wannabeCorrect)
+                    {
+                        for (int* current = last; current > wannabeCorrect; --current)
+                        {
+                            if (*current < *(current - 1))
+                            {
+                                int tmp = *current;
+                                *current = *(current - 1);
+                                *(current - 1) = tmp;
+                            }
+                        }
+                    }
                 }
             }
             
@@ -48,10 +63,29 @@ namespace Lab4.Sorters
 
             unsafe
             {
-                //C++ style addresses: [begin; end) arrays
-                fixed (int* begin = &data[0])
+                //[first; last], INCLUSIVE arrays
+                fixed (int* first = &data[0])
                 {
-                    
+                    int* last = first + size - 1;
+
+                    //"wannabeCorrect" is place to have correct element after iteration
+                    //last element is correct if all others are correct, so "wannabeCorrect" is from [first, last)
+                    for (int* wannabeCorrect = first; wannabeCorrect < last; ++wannabeCorrect)
+                    {
+                        for (int* current = last; current > wannabeCorrect; --current)
+                        {
+                            ++compares;
+
+                            if (*current < *(current - 1))
+                            {
+                                int tmp = *current;
+                                *current = *(current - 1);
+                                *(current - 1) = tmp;
+
+                                ++swaps;
+                            }
+                        }
+                    }
                 }
             }
 
