@@ -25,7 +25,24 @@ namespace Lab4.Sorters
                 //C++ style addresses: [begin; end) arrays
                 fixed (int* begin = &data[0])
                 {
-                    
+                    int* end = begin + size;
+
+                    for (int* elementToPlace = begin + 1; elementToPlace < end; ++elementToPlace)
+                    {
+                        int tmp = *elementToPlace;
+
+                        //Now find first element <= tmp
+                        int* current = elementToPlace - 1;
+                        for (; current >= begin; --current)
+                        {
+                            if (*current <= tmp)
+                                break;
+
+                            *(current + 1) = *current;
+                        }
+
+                        *(current + 1) = tmp;
+                    }
                 }
             }
             
@@ -51,7 +68,28 @@ namespace Lab4.Sorters
                 //C++ style addresses: [begin; end) arrays
                 fixed (int* begin = &data[0])
                 {
-                    
+                    int* end = begin + size;
+
+                    for (int* elementToPlace = begin + 1; elementToPlace < end; ++elementToPlace)
+                    {
+                        ++swaps;
+                        int tmp = *elementToPlace;
+
+                        //Now find first element <= tmp
+                        int* current = elementToPlace - 1;
+                        for (; current >= begin; --current)
+                        {
+                            ++compares;
+                            if (*current <= tmp)
+                                break;
+
+                            ++swaps;
+                            *(current + 1) = *current;
+                        }
+
+                        ++swaps;
+                        *(current + 1) = tmp;
+                    }
                 }
             }
 
