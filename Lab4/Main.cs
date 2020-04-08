@@ -11,74 +11,27 @@ namespace Lab4
             var bench = new SortingTester(42, 10, 100, 1000, 10000);
 
 
-            TestNonSort(bench);
+            TestSorter(bench, new NonSorter());
             
-            TestSelectionSort(bench);
-            TestInsertionSort(bench);
-            TestBubbleSort(bench);
-            TestQuickSort(bench);
-
+            TestSorter(bench, new SelectionSorter());
+            TestSorter(bench, new BubbleSorter());
+            TestSorter(bench, new InsertionSorter());
+            TestSorter(bench, new QuickSorter());
         }
 
 
-        private static void TestNonSort(SortingTester bench)
+        private static void TestSorter(SortingTester tester, IIntegerArraySorter sorter)
         {
-            var nonSorter = new NonSorter();
+            var sorterName = sorter.GetType().Name;
+            
+            var results = tester.Test(sorterName, sorter);
 
-            var results = bench.Test("NonSorter", nonSorter);
-
-            Console.WriteLine("NonSorter:");
+            Console.WriteLine($"{sorterName}:");
             
             foreach (var result in results)
                 result.PrintToConsole();
-        }
 
-        private static void TestSelectionSort(SortingTester bench)
-        {
-            var selectionSorter = new SelectionSorter();
-
-            var results = bench.Test("SelectionSorter", selectionSorter);
-
-            Console.WriteLine("SelectionSorter:");
-            
-            foreach (TestResult result in results)
-                result.PrintToConsole();
-        }
-
-        private static void TestInsertionSort(SortingTester bench)
-        {
-            var insertionSorter = new InsertionSorter();
-            
-            var results = bench.Test("InsertionSorter", insertionSorter);
-            
-            Console.WriteLine("InsertionSorter:");
-            
-            foreach (TestResult result in results)
-                result.PrintToConsole();
-        }
-
-        private static void TestBubbleSort(SortingTester bench)
-        {
-            var bubbleSorter = new BubbleSorter();
-            
-            var results = bench.Test("BubbleSorter", bubbleSorter);
-            
-            Console.WriteLine("BubbleSorter:");
-            
-            foreach (TestResult result in results)
-                result.PrintToConsole();
-        }
-
-        private static void TestQuickSort(SortingTester bench)
-        {
-            var quickSorter = new QuickSorter();
-            
-            var results = bench.Test("QuickSorter", quickSorter);
-            
-            Console.WriteLine("QuickSorter:");
-            
-            foreach (TestResult result in results)
-                result.PrintToConsole();
+            Console.WriteLine(new string('-', 70));
         }
     }
 }
