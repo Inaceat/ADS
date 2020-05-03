@@ -59,6 +59,7 @@
     <Compile Include="Sorters\QuickSorter.cs" />
     <Compile Include="Sorters\InsertionSorter.cs" />
     <Compile Include="Sorters\SelectionSorter.cs" />
+    <Compile Include="Sorters\ListMergeSorter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

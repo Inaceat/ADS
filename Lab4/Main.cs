@@ -11,12 +11,11 @@ namespace Lab4
             var bench = new SortingTester(42, 10, 100, 1000, 10000);
 
 
-            TestSorter(bench, new NonSorter());
-            
             TestSorter(bench, new SelectionSorter());
             TestSorter(bench, new BubbleSorter());
             TestSorter(bench, new InsertionSorter());
             TestSorter(bench, new QuickSorter());
+            TestSorter(bench, new ListMergeSorter());
         }
 
 
