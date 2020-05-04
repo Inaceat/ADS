@@ -70,7 +70,10 @@ namespace Lab4.SimpleSortingBenchmark
 
         private ResultEntry DoTest(IIntDataGenerator dataGenerator, int dataSize, IIntegerArraySorter sorter)
         {
-            //Time
+            int[] sortedData = dataGenerator.GetDataArray(dataSize);
+            Array.Sort(sortedData);
+
+
             int[] data = dataGenerator.GetDataArray(dataSize);
 
             var timer = new Stopwatch();
@@ -82,9 +85,9 @@ namespace Lab4.SimpleSortingBenchmark
 
             //Find if sorting succeeded
             bool correctlySorted = true;
-            for (int i = 0; i < data.Length - 1; ++i)
+            for (int i = 0; i < data.Length; ++i)
             {
-                if (data[i] < data[i + 1]) 
+                if (data[i] == sortedData[i]) 
                     continue;
 
                 correctlySorted = false;
